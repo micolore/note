@@ -1,0 +1,19 @@
+ window 版本
+ 1、项目运行优先使用jre
+ 2、修改tomcat的server.xml
+    原因:系统优先使用javax下面的默认imageio包，注释掉，就会优先使用添加的实现下面的imageio
+   <!-- Prevent memory leaks due to use of particular java/javax APIs-->
+   <!-- <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener"/> -->  
+ 3、java 环境下添加（如：C:\Program Files\Java\jre1.8.0_31\bin） 添加dll文件，jdk下面也可以放入一份。不影响具体的功能。
+ 4、项目添加 webp-imageio.jar包（lib下面）
+ linux版本
+   1、.so文件放到相关系统环境的lib包下面
+         路径如下：
+           /usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+   2、修改tomcat的环境，使用jre。
+   3、jar包正常使用lib方式引入项目
+   
+   参考连接：
+   http://tomcat.10.x6.nabble.com/Problems-with-ImageIO-td2073212.html JreMemoryLeakPreventionListener
+   http://blog.csdn.net/GeekLei/article/details/41147479
+   
