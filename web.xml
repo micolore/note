@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<!-- WEB容器的加载顺序是：ServletContext -> context-param -> listener -> filter -> servlet -->
+	
+	<!-- <icon>Web应用图标 -->
+	<icon>
+	    <small-icon>/images/app_small.gif</small-icon>
+	    <large-icon>/images/app_large.gif</large-icon>
+     </icon>
+    <!-- <display-name>Web应用名称 -->
+     <display-name>Tomcat Example</display-name>
+
+    <!-- <disciption>Web应用描述 -->
+     <disciption>Tomcat Example servlets and JSP pages.</disciption>
+
+    <!-- <context-param>上下文参数 
+		    声明应用范围内的初始化参数。它用于向 ServletContext提供键值对，即应用程序上下文信息.
+		    我们的listener, filter等在初始化时会用到这些上下文中的信息.
+		    在servlet里面可以通过getServletContext().getInitParameter("context/param")得到.
+     -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:spring/*.xml</param-value>
+	</context-param>
+	
+	<!-- <listener>监听器 
+	   listener元素用来注册一个监听器类，可以在Web应用中包含该类。使用listener元素，可以收到事件什么时候发生以及用什么作为响应的通知。
+       listener元素用来定义Listener接口,它的主要子元素为<listener-class>
+       <listen-class>Listener的类名称</listener-class> 定义Listener的类名称.例如: com.foo.hello
+	-->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	
+	<!-- <filter> 过滤器 
+	  filter元素用于指定Web容器中的过滤器。
+               在请求和响应对象被servlet处理之前或之后，可以使用过滤器对这两个对象进行操作。
+              利用下一节介绍 的filter-mapping元素，过滤器被映射到一个servlet或一个URL模式。
+             这个过滤器的filter元素和filter-mapping 元素必须具有相同的名称。
+     filter元素用来声明filter的相关设定.filter元素除了下面介绍的的子元素之外,还包括之前介绍过的<icon>,
+     <display-name>,<description>,<init-param>,其用途一样.
+             下面介绍filter-name，filter-class和init-param元素
+     init-param元素与context-param 元素具有相同的元素描述符。
+        filter-name元素用来定义过滤器的名称，该名称在整个应用中都必须是惟一的。
+        filter-class元素指定过滤 器类的完全限定的名称。
+
+    <filter-name>Filter的名称</filter-name> 定义Filter的名称.
+    <filter-class>Filter的类名称</filter-class> 定义Filter的类名称.例如:com.foo.hello
+	-->
+    <filter>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>com.moppo.lopscoop.filter.LoginFilter</filter-class>
+	</filter>
+	
+    <!-- 
+       <filter-mapping> 过滤器 
+	   filter-mapping元素用来声明Web应用中的过滤器映射。过滤器可被映射到一个servlet或一个URL模式。将过滤器映射到一个 servlet中会造成过滤器作用于servlet上。
+	                 将过滤器映射到一个URL模式中则可以将过滤器应用于任何资源，只要该资源的URL与URL模式匹配。过滤是按照部署描述符的filter-mapping元素出现的顺序执行的。
+       filter-mapping 元素的两个主要子元素filter-name和url-pattern.用来定义Filter所对应的URL。还有servlet-name和dispatcher子元素，不是很常用。
+        <filter-name>Filter的名称</filter-name>  定义Filter的名称.
+        <url-pattern>URL</url-pattern> Filter所对应的RUL.例如:<url-pattern>/Filter/Hello</url-pattern>
+        <servlet-name>Servlet的名称<servlet-name> 定义servlet的名称.
+        <dispatcher>REQUEST|INCLUDE|FORWARD|ERROR</disaptcher> 设定Filter对应的请求方式,有RQUEST,INCLUDE,FORWAR,ERROR四种,默认为REQUEST.
+	-->
+ 	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<async-supported>true</async-supported>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- <servlet> -->
+	<servlet>
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring/applicationContext.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<!-- <session-config>
+	    定义这个web应用所有session的有效期限,单位为分钟
+	 -->
+	<session-config>
+		<session-timeout>120</session-timeout>
+	</session-config>
+	
+	<!-- <mime-mapping>
+	     mime-mapping包含两个子元素extension和mime-type.定义某一个扩展名和某一MIME Type做对映.
+           <extension>扩展名名称</extension> 扩展名称
+           <mime-type>MIME格式</mime-type> MIME格式.
+	 -->
+	 <mime-mapping>
+       <extension>htm</extension>
+       <mime-type>text/html</mime-type>
+     </mime-mapping>
+	
+	<!-- 欢迎页 
+	    <welcome-file>用来指定首页文件名称</welcome-flie>
+        welcome-file用来指定首页文件名称.我们可以用<welcome-file>指定几个首页,而服务器会依照设定的顺序来找首页.
+    -->
+	<welcome-file-list>
+		<welcome-file></welcome-file>
+	</welcome-file-list>
+	
+	<!-- 错误页面配置
+	    error-page元素包含三个子元素error-code,exception-type和location.
+                     将错误代码(Error Code)或异常(Exception)的种类对应到web应用资源路径.
+        <error-code>错误代码</error-code> HTTP Error code,例如: 404
+        <exception-type>Exception</exception-type> 一个完整名称的Java异常类型
+        <location>/路径</location>在web应用内的相关资源路径
+	 -->
+	<error-page>
+      <error-code>404</error-code>
+      <location>/NotFound.jsp</location>
+    </error-page>
+    
+    <!-- <jsp-config>设置jsp 
+        <description>Description</descrition>    此设定的说明 
+        <display-name>Name</display-name>          此设定的名称 
+        <url-pattern>URL</url-pattern>             设定值所影响的范围,如:/CH2 或者/*.jsp 
+        <el-ignored>true|false</el-ignored>       若为true,表示不支持EL语法.  
+        <scripting-invalid>true|false</scripting-invalid>  若为true表示不支持<%scription%>语法. 
+        <page-encoding>encoding</page-encoding>   设定JSP网页的编码  
+        <include-prelude>.jspf</include-prelude>   设置JSP网页的抬头,扩展名为.jspf  
+        <include-coda>.jspf</include-coda>       设置JSP网页的结尾,扩展名为.jspf 
+    -->
+    
+	 <jsp-config>  
+	    <taglib>  
+	        <taglib-uri>Taglib</taglib-uri>  
+	        <taglib-location>/WEB-INF/tlds/MyTaglib.tld</taglib-location>  
+	    </taglib>  
+	    <jsp-property-group>  
+	        <description>  
+	          Special property group for JSP Configuration JSP example.  
+	        </description>  
+	        <display-name>JSPConfiguration</display-name>  
+	        <uri-pattern>/*</uri-pattern>  
+	        <el-ignored>true</el-ignored>  
+	        <page-encoding>GB2312</page-encoding>  
+	        <scripting-inivalid>true</scripting-inivalid>  
+	   ............  
+	    </jsp-property-group>  
+	 </jsp-config> 
+	 
+    <!-- 
+     <description>说明</description> 资源说明
+     <rec-ref-name>资源名称</rec-ref-name> 资源名称
+     <res-type>资源种类</res-type> 资源种类
+     <res-auth>Application|Container</res-auth> 资源由Application或Container来许可
+     <res-sharing-scope>Shareable|Unshareable</res-sharing-scope> 资源是否可以共享.默认值为 Shareable
+     -->
+    <resource-ref>  
+	   <description>JNDI JDBC DataSource of JSPBook</description>  
+	   <res-ref-name>jdbc/sample_db</res-ref-name>  
+	   <res-type>javax.sql.DataSoruce</res-type>  
+	   <res-auth>Container</res-auth>  
+	</resource-ref>  
+ 
+</web-app>
