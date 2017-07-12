@@ -1,0 +1,14 @@
+public static void main(String[] args) {
+		MathContext mathContext = new MathContext(1,RoundingMode.DOWN);//0.2向零方向舍入的舍入模式
+		BigDecimal qu = new BigDecimal(12).multiply(new BigDecimal(0.002),mathContext);
+		System.out.println(qu);
+//		MathContext m2 = new MathContext(2,RoundingMode.UP);//0.24 远离零方向舍入的舍入模式
+		MathContext m2 = new MathContext(2,RoundingMode.CEILING);//0.25 向正无限大方向舍入的舍入模式
+//		MathContext m2 = new MathContext(2,RoundingMode.FLOOR);//0.25 向负无限大方向舍入的舍入模式。
+//		MathContext m2 = new MathContext(2,RoundingMode.HALF_DOWN);//0.24 向最接近数字方向舍入的舍入模式，如果与两个相邻数字的距离相等，则向下舍入
+//		MathContext m2 = new MathContext(2,RoundingMode.HALF_EVEN);//0.24 向最接近数字方向舍入的舍入模式，如果与两个相邻数字的距离相等，则向相邻的偶数舍入
+//		MathContext m2 = new MathContext(2,RoundingMode.HALF_UP);//0.24 向最接近数字方向舍入的舍入模式，如果与两个相邻数字的距离相等，则向上舍入
+//		MathContext m2 = new MathContext(2,RoundingMode.UNNECESSARY);//用于断言请求的操作具有精确结果的舍入模式，因此不需要舍入.
+		BigDecimal q2 = new BigDecimal(12).multiply(new BigDecimal(0.002),m2);
+		System.out.println(q2);
+	}
