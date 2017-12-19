@@ -1,0 +1,11 @@
+public class CodePartTools {
+   /**
+    *  url www.lopscoop.com?h=2&content_id=1&w=1 
+    *  get params 
+    */
+  public static String getPara(String url, String name) {
+      String params = url.substring(url.indexOf("?") + 1, url.length());
+      Map<String, String> split = Splitter.on("&").withKeyValueSeparator("=").split(params);
+      return split.get(name);
+  }
+}
