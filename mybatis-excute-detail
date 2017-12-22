@@ -5,8 +5,14 @@ mybatis excute detail
    org.apache.ibatis.executor.CachingExecutor.query(MappedStatement, Object, RowBounds, ResultHandler)
          //sql语句缓存
          public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException {
-            BoundSql boundSql = ms.getBoundSql(parameterObject);
+            BoundSql boundSql = ms.getBoundSql(parameterObject);//
             CacheKey key = createCacheKey(ms, parameterObject, rowBounds, boundSql);
             return query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
         }
-   
+        public class BoundSql {
+              private String sql;
+              private List<ParameterMapping> parameterMappings;
+              private Object parameterObject;
+              private Map<String, Object> additionalParameters;
+              private MetaObject metaParameters;
+        }
