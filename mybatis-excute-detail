@@ -3,3 +3,10 @@ mybatis excute detail
    org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(String, Object, RowBounds)
    org.apache.ibatis.executor.BaseExecutor.query(MappedStatement, Object, RowBounds, ResultHandler)
    org.apache.ibatis.executor.CachingExecutor.query(MappedStatement, Object, RowBounds, ResultHandler)
+         //sql语句缓存
+         public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException {
+            BoundSql boundSql = ms.getBoundSql(parameterObject);
+            CacheKey key = createCacheKey(ms, parameterObject, rowBounds, boundSql);
+            return query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
+        }
+   
