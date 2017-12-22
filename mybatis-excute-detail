@@ -1,0 +1,5 @@
+mybatis excute detail
+   org.apache.ibatis.session.SqlSession.selectList(String)
+   org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(String, Object, RowBounds)
+   org.apache.ibatis.executor.BaseExecutor.query(MappedStatement, Object, RowBounds, ResultHandler)
+   org.apache.ibatis.executor.CachingExecutor.query(MappedStatement, Object, RowBounds, ResultHandler)
