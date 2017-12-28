@@ -1,0 +1,3 @@
+action --- service  
+    action 负责校验,以及组装服务端需要的参数
+    service 负责处理，并且返回处理的结果
