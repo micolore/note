@@ -1,0 +1,2 @@
+  show processlist; 
+      查看现在正在执行的sql
