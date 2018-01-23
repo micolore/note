@@ -1,4 +1,4 @@
-#java memory model 
+# java memory model 
 1. GC  
 
 >GC必须监控每一个对象的运行状态，包括对象的申请、引用、被引用、赋值等，GC都需要进行监控
