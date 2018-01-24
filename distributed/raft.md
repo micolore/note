@@ -31,8 +31,8 @@
 2. Leader要求Followe遵从他的指令，都将这个新的日志内容追加到他们各自日志中： 
 ![raft9](https://github.com/micolore/blogs/blob/master/distributed/raft9.png)  
 
-3.大多数follower服务器将日志写入磁盘文件后，确认追加成功，发出Commited Ok:  
-![raft10](https://github.com/micolore/blogs/blob/master/distributed/raft10.png) 
+3.大多数follower服务器将日志写入磁盘文件后，确认追加成功，发出Commited Ok:   
+![raft10](https://github.com/micolore/blogs/blob/master/distributed/raft10.png)   
 &ensp;&ensp;&ensp;&ensp;对于每个新的日志记录，重复上述过程。
 
 4. 在下一个心跳heartbeat中，Leader会通知所有Follwer更新commited 项目。
