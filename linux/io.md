@@ -46,6 +46,6 @@
 ### 非阻塞
 ### IO多路复用
 ### 异步
-参考连接:  
+参考连接:  
 [进程切换](http://guojing.me/linux-kernel-architecture/posts/process-switch/)  
 [聊聊Linux 五种IO模型](https://www.jianshu.com/p/486b0965c296)
