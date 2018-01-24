@@ -61,7 +61,11 @@
 * jinfo.exe	配置或打印某个Java进程VM flag
 * jhat.exe	堆储存查看器
 * jmap.exe	Java内存图  
-   查看某个pid的java服务占用内存排名前20的类,jmap -histo pid | head -20
+   查看某个pid的java服务占用内存排名前20的类,jmap -histo pid | head -20  
+   jmap还有一个指令可以把整个内存情况转成文件形式保存下来：jmap -dump:format=b,file=filename.bin <pid>  
+   从远程用sz filename.bin命令将文件下载到本地来，在用Eclipse插件MAT(Memory Analyse Tool)分析整个文件，  
+   MAT插件需要下载安装，方法Google可以找到。
+   
 * jsadebugd.exe	Java的 Serviceability Agent Debug的守护进程
 * jstack.exe	Java堆栈跟踪
 
