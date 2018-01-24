@@ -60,7 +60,7 @@
 ## 故障检测和修理工具
 * jinfo.exe	配置或打印某个Java进程VM flag
 * jhat.exe	堆储存查看器
-* jmap.exe	Java内存图
+* jmap.exe	Java内存图  
    查看某个pid的java服务占用内存排名前20的类,jmap -histo pid | head -20
 * jsadebugd.exe	Java的 Serviceability Agent Debug的守护进程
 * jstack.exe	Java堆栈跟踪
