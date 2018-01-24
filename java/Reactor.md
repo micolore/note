@@ -56,7 +56,6 @@
  而异步的时候内核在IO事件发生的时候通知应用程序，
  而阻塞和非阻塞仅仅是系统在调用系统调用的时候函数的实现方式而已。
  
- ![GitHub](https://github.com/micolore/blogs/blob/master/java/peactor.png "I/O,peactor")
- ![GitHub](https://github.com/micolore/blogs/blob/master/java/proactor.png "I/O,proactor")
+
  
- [参考连接](http://blog.csdn.net/zccracker/article/details/38686339)
+ [文章参考连接](http://blog.csdn.net/zccracker/article/details/38686339)
