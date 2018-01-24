@@ -35,8 +35,8 @@
 ![raft10](https://github.com/micolore/blogs/blob/master/distributed/raft10.png) 
 &ensp;&ensp;&ensp;&ensp;对于每个新的日志记录，重复上述过程。
 
+4. 在下一个心跳heartbeat中，Leader会通知所有Follwer更新commited 项目。
+
 &ensp;&ensp;&ensp;&ensp;如果在这一过程中，发生了网络分区或者网络通信故障，使得Leader不能访问大多数Follwers了，那么Leader只能正常更新它能访问的那些Follower服务器，而大多数的服务器Follower因为没有了Leader，他们重新选举一个候选者作为Leader，然后这个Leader作为代表于外界打交道，如果外界要求其添加新的日志，这个新的Leader就按上述步骤通知大多数Followers，如果这时网络故障修复了，那么原先的Leader就变成Follower，在失联阶段这个老Leader的任何更新都不能算commit，都回滚，接受新的Leader的新的更新。
 
 总结：目前几乎所有语言都已经有支持Raft算法的库包
-
-4. 在下一个心跳heartbeat中，Leader会通知所有Follwer更新commited 项目。
