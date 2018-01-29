@@ -36,9 +36,9 @@
 ## 网络I/O模型
 * 同步模型（synchronous IO）
 * 阻塞IO（bloking IO）
-[blocking-IO](www.blocking-IO.png)
+![blocking-IO](www.blocking-IO.png)
 * 非阻塞IO（non-blocking IO）  
-[nonblocking-IO](nonblocking-IO.png)
+![nonblocking-IO](nonblocking-IO.png)
 * 多路复用IO（multiplexing IO）
 select、poll、epoll(轮询)
 * 信号驱动式IO（signal-driven IO）
@@ -56,10 +56,6 @@ select、poll、epoll(轮询)
 阻塞和非阻塞关注的是程序在等待调用结果（消息，返回值）时的状态.阻塞调用是指调用结果返回之前，当前线程会被挂起。
 调用线程只有在得到结果之后才会返回。非阻塞调用指在不能立刻得到结果之前，该调用不会阻塞当前线程
 
-作者：cooffeelis
-链接：https://www.jianshu.com/p/511b9cffbdac
-來源：简书
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 参考连接:  
 [进程切换](http://guojing.me/linux-kernel-architecture/posts/process-switch/)  
 [聊聊Linux 五种IO模型](https://www.jianshu.com/p/486b0965c296)
