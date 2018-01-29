@@ -32,11 +32,15 @@
 对于socket而言
 >1. 第一步：通常涉及等待网络上的数据分组到达，然后被复制到内核的某个缓冲区。
 >2. 第二步：把数据从内核缓冲区复制到应用进程缓冲区。
+  
 ## 网络I/O模型
 * 同步模型（synchronous IO）
 * 阻塞IO（bloking IO）
-* 非阻塞IO（non-blocking IO）
+[blocking-IO](www.blocking-IO.png)
+* 非阻塞IO（non-blocking IO）  
+[nonblocking-IO](nonblocking-IO.png)
 * 多路复用IO（multiplexing IO）
+select、poll、epoll(轮询)
 * 信号驱动式IO（signal-driven IO）
 * 异步IO（asynchronous IO）
 常见的IO模型有阻塞、非阻塞、IO多路复用，异步
@@ -46,6 +50,16 @@
 ### 非阻塞
 ### IO多路复用
 ### 异步
+## 同步IO VS 异步IO
+同步与异步同步和异步关注的是消息通信机制 (synchronous communication/ asynchronous communication)所谓同步，就是在发出一个调用时，在没有得到结果之前，该调用就不返回。但是一旦调用返回，就得到返回值了。换句话说，就是由调用者主动等待这个调用的结果。而异步则是相反，调用在发出之后，这个调用就直接返回了，所以没有返回结果。换句话说，当一个异步过程调用发出后，调用者不会立刻得到结果。而是在调用发出后，被调用者通过状态、通知来通知调用者，或通过回调函数处理这个调用  
+## 阻塞IO VS 非阻塞IO  
+阻塞和非阻塞关注的是程序在等待调用结果（消息，返回值）时的状态.阻塞调用是指调用结果返回之前，当前线程会被挂起。
+调用线程只有在得到结果之后才会返回。非阻塞调用指在不能立刻得到结果之前，该调用不会阻塞当前线程
+
+作者：cooffeelis
+链接：https://www.jianshu.com/p/511b9cffbdac
+來源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 参考连接:  
 [进程切换](http://guojing.me/linux-kernel-architecture/posts/process-switch/)  
 [聊聊Linux 五种IO模型](https://www.jianshu.com/p/486b0965c296)
