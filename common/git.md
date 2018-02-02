@@ -80,8 +80,8 @@ git revert是用一次新的commit来回滚之前的commit，git reset是直接�
 * git diff HEAD显示工作区与当前分支最新commit之间的差异
 * git cherry-pick 选择一个commit，合并进当前分支
 
-[参考1](https://www.jianshu.com/p/15b8e6b7e3d7)
-[参考2](https://git-scm.com/book/zh/v1/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E7%9A%84%E6%96%B0%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6)
+[Git高级教程](https://www.jianshu.com/p/15b8e6b7e3d7)  
+[Git 分支 - 分支的新建与合并](https://git-scm.com/book/zh/v1/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E7%9A%84%E6%96%B0%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6)  
 
 
 
