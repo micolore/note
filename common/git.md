@@ -13,7 +13,7 @@
 * Remote：远程仓库  
 远程仓库的内容可能被分布在多个地点的处于协作关系的本地仓库修改，因此它可能与本地仓库同步，也可能不同步，但是它的内容是最旧的。
 
-![git river](https://github.com/micolore/blogs/blob/master/common/img/workspace.png)
+![git river](https://github.com/micolore/blogs/blob/master/common/img/git-workspace.png)
 
 ## HEAD
 它始终指向当前所处分支的最新的提交点。你所处的分支变化了，或者产生了新的提交点，HEAD就会跟着改变
