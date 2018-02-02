@@ -1,4 +1,4 @@
-# git
+# Git
 ![git river](https://github.com/micolore/blogs/blob/master/common/img/git-river.png)
 * Workspace：工作区  
 程序员进行开发改动的地方，是你当前看到的，也是最新的,平常我们开发就是拷贝远程仓库中的一个分支，基于该分支进行开发。在开发过程中就是对工作区的操作。
@@ -18,7 +18,7 @@
 ## HEAD
 它始终指向当前所处分支的最新的提交点。你所处的分支变化了，或者产生了新的提交点，HEAD就会跟着改变
 
-### COMMAND
+### Command
 1. add 
 主要实现将工作区修改的内容提交到暂存区，交由git管理   
 * git add .添加当前目录的所有文件到暂存区  
