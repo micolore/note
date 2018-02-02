@@ -12,7 +12,7 @@
 
 * Remote：远程仓库  
 远程仓库的内容可能被分布在多个地点的处于协作关系的本地仓库修改，因此它可能与本地仓库同步，也可能不同步，但是它的内容是最旧的。
-![git river]()
+![git river](https://github.com/micolore/blogs/common/img/git-river.png)
 
 
 ## HEAD
