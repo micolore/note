@@ -35,19 +35,31 @@ SSL协议分为两部分：Handshake Protocol和Record Protocol。其中Handshak
 
 !["tls-ssl"](https://github.com/micolore/blogs/blob/master/protocol/img/tls-ssl.svg)
 
+###  客户端发出请求（ClientHello）
+ client 必须把自身支持的加密方式告知server端，并生成一个随机数。
+1. 支持的协议版本，比如TLS 1.0版
+2. 一个客户端生成的随机数，稍后用于生成"对话密钥"
+4. 支持的加密方法，比如RSA公钥加密
+5. 支持的压缩方法
+
+### 服务器回应（SeverHello)
+1. 确认使用的加密通信协议版本，比如TLS 1.0版本。如果浏览器与服务器支持的版本不一致，服务器关闭加密通信
+3. 一个服务器生成的随机数，稍后用于生成"对话密钥"
+4. 确认使用的加密方法，比如RSA公钥加密
+5. 服务器证书
+
+### 客户端回应（Certificate Verify）
+验证证书合法之后（机构、域名、有效期），向服务器发送以下信息。
+1. 一个随机数。该随机数用服务器公钥加密，防止被窃听
+2. 编码改变通知，表示随后的信息都将用双方商定的加密方法和密钥发送
+3. 客户端握手结束通知，表示客户端的握手阶段已经结束。这一项同时也是前面发送的所有内容的hash值，用来供服务器校验
 
 
+### 服务器的最后回应（Server Finish）
+服务端在接收到客户端传过来的 PreMaster 加密数据之后，使用私钥对这段加密数据进行解密，并对数据进行验证，也会使用跟客户端同样的方式生成 Session Secret，一切准备好之后，会给客户端发送一个 ChangeCipherSpec，告知客户端已经切换到协商过的加密套件状态，准备使用加密套件和 Session Secret加密数据了。之后，服务端也会使用 Session Secret 加密一段 Finish 消息发送给客户端，以验证之前通过握手建立起来的加解密通道是否成功。
 
-
-
-
-
-
-
-
-
-
-
+### 几个secret
+!["tls-kes-create"](https://github.com/micolore/blogs/blob/master/protocol/img/tls-keys-create.svg)
 
 
 参考连接：   
