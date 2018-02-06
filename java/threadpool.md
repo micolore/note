@@ -46,7 +46,8 @@ Exectors工厂类提供了线程池的初始化接口
 
 参考链接:  
 [threadpool 实现原理](https://www.jianshu.com/p/87bff5cc8d8c)  
-[线程池的介绍及简单实现](https://www.ibm.com/developerworks/cn/java/l-threadPool/)  
+[线程池的介绍及简单实现](https://www.ibm.com/developerworks/cn/java/l-threadPool/)   
+[Java并发编程：线程池的使用](https://www.cnblogs.com/dolphin0520/p/3932921.html)  
  
 
 
