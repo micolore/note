@@ -20,7 +20,7 @@
 
 ## TCP/IP参考模型
 
-TCP/IP更强调“在计算机上实现协议应该开发哪种程序
+TCP/IP更强调“在计算机上实现协议应该开发哪种程序   
 !["tcp/ip"](https://github.com/micolore/blogs/blob/master/common/img/tcpip-tcpip.png)
 
 * 物理层   TCP/IP物理层是负责数据传输的硬件
