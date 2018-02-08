@@ -32,3 +32,6 @@ TCP/IP更强调“在计算机上实现协议应该开发哪种程序
 * 传输层  传输层的主要功能就是让应用程序之间实现通信
  
 * 应用层  TCP/IP应用的架构大多数属于客户端/服务器模型。常见的应用有www、E-mail、FTP、TELNET、SNMP（网络管理）
+
+参考连接:    
+[TCP/IP（一）分层模型](http://liuguoquan727.github.io/2015/12/17/TCP-IP1%E6%A8%A1%E5%9E%8B/)   
