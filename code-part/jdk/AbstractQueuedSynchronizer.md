@@ -149,15 +149,37 @@ final void lock() {
         }
 ```
 
+# java.util.concurrent.CountDownLatch
+
+* java.util.concurrent.CountDownLatch.countDown()  
+   countDown() 方法每次调用都会将 state 减 1，直到 state 的值为 0 
+1. java.util.concurrent.locks.AbstractQueuedSynchronizer.releaseShared(int)
+2. java.util.concurrent.locks.AbstractQueuedSynchronizer.tryReleaseShared(int)
+3. java.util.concurrent.locks.AbstractQueuedSynchronizer.doReleaseShared()
+4. java.util.concurrent.locks.AbstractQueuedSynchronizer.unparkSuccessor(Node) 唤醒
+5. java.util.concurrent.locks.AbstractQueuedSynchronizer.setHeadAndPropagate(Node, int)
+6. java.util.concurrent.locks.AbstractQueuedSynchronizer.doReleaseShared()
+
+* java.util.concurrent.CountDownLatch.await() 
+   而 await 是一个阻塞方法，当 state 减为 0 的时候，await 方法才会返回
+
+1. java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireSharedInterruptibly(int)
+2. java.util.concurrent.locks.AbstractQueuedSynchronizer.tryAcquireShared(int)
+3. java.util.concurrent.locks.AbstractQueuedSynchronizer.doAcquireSharedInterruptibly(int)
 
 
 
 
 
+#  java.util.concurrent.CyclicBarrier 
+字面意思是“可重复使用的栅栏”，它是 ReentrantLock 和 Condition 的组合使用
+
+# java.util.concurrent.Semaphore 
+它类似一个资源池，每个线程需要调用 acquire() 方法获取资源，然后才能执行，执行完后，需要 release 资源，让给其他的线程用
 
 
+整体看了一下，很有收获，继续磕concurrent包
 
 
-
-
-
+参考链接：   
+[一行一行源码分析清楚 AbstractQueuedSynchronizer (三)](https://javadoop.com/post/AbstractQueuedSynchronizer-3)
