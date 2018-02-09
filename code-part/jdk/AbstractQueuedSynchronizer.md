@@ -57,5 +57,107 @@
   * java.util.concurrent.locks.AbstractQueuedSynchronizer.unparkSuccessor(Node)
   * java.util.concurrent.locks.LockSupport.unpark(Thread)
 
+# java.util.concurrent.locks.ReentrantLock
+
+1. 锁默认实现方式为非公平锁,除非你在构造方法中传入参数 true 。
+```
+public ReentrantLock() {
+    sync = new NonfairSync();
+}
+public ReentrantLock(boolean fair) {
+    sync = fair ? new FairSync() : new NonfairSync();
+}
+```
+
+2. 公平锁与非公平锁的区别
+   * 公平锁和非公平锁相比，这里多了一个判断：是否有线程在等待
+```
+  protected final boolean tryAcquire(int acquires) {
+        final Thread current = Thread.currentThread();
+        int c = getState();
+        if (c == 0) {
+            // 1. 和非公平锁相比，这里多了一个判断：是否有线程在等待
+            if (!hasQueuedPredecessors() &&
+                compareAndSetState(0, acquires)) {
+                setExclusiveOwnerThread(current);
+                return true;
+            }
+        }
+        else if (current == getExclusiveOwnerThread()) {
+            int nextc = c + acquires;
+            if (nextc < 0)
+                throw new Error("Maximum lock count exceeded");
+            setState(nextc);
+            return true;
+        }
+        return false;
+    }
+```
+* 非公平锁   
+```
+final void lock() {
+        // 2. 和公平锁相比，这里会直接先进行一次CAS，成功就返回了
+        if (compareAndSetState(0, 1))
+            setExclusiveOwnerThread(Thread.currentThread());
+        else
+            acquire(1);
+    }
+```
+> 总结：公平锁和非公平锁只有两处不同：
+非公平锁在调用 lock 后，首先就会调用 CAS 进行一次抢锁，如果这个时候恰巧锁没有被占用，那么直接就获取到锁返回了。  
+非公平锁在 CAS 失败后，和公平锁一样都会进入到 tryAcquire 方法，在 tryAcquire 方法中，如果发现锁这个时候被释放了（state == 0），非公平锁会直接 CAS 抢锁，但是公平锁会判断等待队列是否有线程处于等待状态，如果有则不去抢锁，乖乖排到后面。   
+
+公平锁和非公平锁就这两点区别，如果这两次 CAS 都不成功，那么后面非公平锁和公平锁是一样的，都要进入到阻塞队列等待唤醒。   
+
+相对来说，非公平锁会有更好的性能，因为它的吞吐量比较大。当然，非公平锁让获取锁的时间变得更加不确定，可能会导致在阻塞队列中的线程长期处于饥饿状态。
+
+
+# java.util.concurrent.locks.Condition
+>条件队列
+
+* java.util.concurrent.locks.AbstractQueuedSynchronizer.ConditionObject
+* java.util.concurrent.locks.AbstractQueuedSynchronizer.ConditionObject.await()
+* java.util.concurrent.locks.AbstractQueuedSynchronizer.ConditionObject.awaitUninterruptibly() 不可被中断
+* java.util.concurrent.locks.AbstractQueuedSynchronizer.ConditionObject.addConditionWaiter()
+* java.util.concurrent.locks.AbstractQueuedSynchronizer.ConditionObject.unlinkCancelledWaiters()
+* java.util.concurrent.locks.AbstractQueuedSynchronizer.fullyRelease(Node)
+* java.util.concurrent.locks.AbstractQueuedSynchronizer.isOnSyncQueue(Node)
+* java.util.concurrent.locks.AbstractQueuedSynchronizer.ConditionObject.signal()
+* java.util.concurrent.locks.AbstractQueuedSynchronizer.ConditionObject.doSignal(Node)
+* java.util.concurrent.locks.AbstractQueuedSynchronizer.transferForSignal(Node)
+* java.util.concurrent.locks.AbstractQueuedSynchronizer.ConditionObject.checkInterruptWhileWaiting(Node)
+* java.util.concurrent.locks.AbstractQueuedSynchronizer.transferAfterCancelledWait(Node)
+
+```
+        public final void await() throws InterruptedException {
+            if (Thread.interrupted())
+                throw new InterruptedException();
+            Node node = addConditionWaiter();
+            int savedState = fullyRelease(node);
+            int interruptMode = 0;
+            while (!isOnSyncQueue(node)) {
+                LockSupport.park(this);
+                if ((interruptMode = checkInterruptWhileWaiting(node)) != 0)
+                    break;
+            }
+            if (acquireQueued(node, savedState) && interruptMode != THROW_IE)
+                interruptMode = REINTERRUPT;
+            if (node.nextWaiter != null) // clean up if cancelled
+                unlinkCancelledWaiters();
+            if (interruptMode != 0)
+                reportInterruptAfterWait(interruptMode);
+        }
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
