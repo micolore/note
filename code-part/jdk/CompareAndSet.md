@@ -170,3 +170,5 @@ Java的CAS会使用现代处理器上提供的高效机器级别原子指令，�
 
 AQS，非阻塞数据结构和原子变量类（java.util.concurrent.atomic包中的类），这些concurrent包中的基础类都是使用这种模式来实现的，而concurrent包中的高层类又是依赖于这些基础类来实现的
 
+参考连接:   
+[VA CAS原理深度分析](http://zl198751.iteye.com/blog/1848575)
