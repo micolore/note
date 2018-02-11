@@ -151,9 +151,131 @@ but 在jmm中就没有这个保证，未同步程序不仅整体执行顺序是�
 在顺序一致性模型中，所有操作完全按照程序的顺序串行执行    
 在jmm中 在临界区的代码还是可以进行重排序
 
+
 ## 未同步程序的执行特效  
 jmm 提供最小安全性 线程执行时读到值，要么是之前写的值，要么是默认值
 
+在计算机中 数据通过总线在处理器和内存中传递，每次处理器和内存之间的数据传递都是通过一系列步骤来完成的，这一系列步骤
+称之为总线事务，总线事务包括 read 和write,读事务从内存中传到处理器，写事务从处理器传递数据到内存。关键来了，总线会试图
+并发使用总线的事务，在一个处理器处理处理总线事务期间，总线会禁止其他所有的处理器和I/设备执行内存的读和写。
+
+
+# volatile
+
+上了锁的单个变量读/写   
+
+锁的语义决定了临界区代码的执行具有原子性   
+
+特性：   
+* 可见性
+  对一个volatile变量的读，总是能看到任意线程对这个volatile变量最后的写入    
+* 原子性
+  对任意单个volatile变量的读/写具有原子性，但类似volatile++复合操作不具有原子性    
+  
+ ## volatile写-读的建立的happen-before关系
+ 
+ jdk5+ 使用 vilatile 读写可以实现线程间的通信
+ ```
+ public class VolatileExample {
+
+	public volatile int x = 0;
+	public boolean flag = false;
+
+	public void read() {
+		x = 1;
+		flag = true;
+	}
+
+	public void write() {
+		if (flag) {
+			int y = x;
+		}
+	}
+}
+ ```
+ 
+ ## volatile写-读的内存语义
+ 
+ volatile 写的内存语义：  
+ * 当写一个volatile变量时，jmm会把该线程对应的本地内存中共享变量刷到主内存   
+ 
+  volatile 读的内存语义：  
+* 当读一个volatile变量时,jmm会把该线程对应的本地内存置为无效，线程接下来从主内存中读取共享变量
+
+总结：  
+* 线程a写一个volatile变量，实质上是线程a向接下来的要读这个volatile变量的某个线程发出了消息
+* 线程b读一个volatile变量，实质上是线程b接收了之前某个线程发出的消息
+* 线程a写一个volatile变量，随后线程b读这个volatile变量，这个过程实质上是线程a通过主内存向线程b发送消息
+
+## volatile内存语义的实现
+为了实现volatile的语义，编译器在生成字节码时，会在指令序列中插入内存屏障来禁止特定类型的处理器重排序。   
+
+基于保守策略的jmm内存屏障插入策略
+* 每个v写前面插入一个storestore屏障
+* 每个v写后面插入一个storeload屏障
+* 每个v读后面插入一个loadload屏障
+* 每个v读后面插入一个loadstore屏障
+
+
+# 锁
+
+## 锁的释放-获取建立的happen-before 关系
+
+## 锁释放和获取的语义
+
+当线程释放锁时，jmm会把该线程对应的本地缓存刷新到主内存中。   
+
+当线程获取锁的时候，jmm会强制把该线程的本地内存置为无效，从而使得被监视器保护的临界区代码必须要从主内存中读取共享变量
+
+总结:    
+
+*  线程a 释放一个锁,实质上是线程a向接下来要获取锁的某个线程发出了消息
+*  线程b 获取一个锁，实质上是线程b接收了之前某个线程发出的消息
+*  线程a 释放一个锁，随后线程b获取这个锁，这个过程是线程a通过主内存向线程b发送消息
+
+## 锁内存语义的实现  
+
+公平锁和非公平锁的内存语义   
+* 公平锁与非公平锁释放都是要写一个volatile变量state
+* 公平锁释放时会先去读这个volatile变量
+* 非公平锁获取时首先会用cas更新这个volatile变量，这个操作同时具有volatile写和volatile读的内存语义
+
+## concurrent包的实现
+由于java的cas 同时具有volatile读和volatile写的内存语义，因此java线程之间的通信有了下面四种方式    
+*  a thread write volatile variable 随后 b thread read this variable
+*  a thread write volatile variable 随后 b thread use cas update this  volatile variable
+*  a thread use cas update this volatile variable 随后  b thread use cas update volatile variable
+*  a thread use cas update this volatile variable 随后  b thread read this volatile variable
+
+concurrent包的实现模式
+1.  首先 声明共享变量为volatile 
+2.  然后 使用cas的原子条件更新来实现线程之间的同步
+3.  同时配合以volatile r/w 和cas 所具有的volatile r/w 的内存语义来实现线程之间的通信
+
+
+# final  
+
+## 写final域的重排序
+
+## 读final域的重排序
+
+## 如果final域是引用类型
+
+## 为什么final 引用不能从构造函数内 溢出
+
+## final 语义在处理器中的实现
+
+# 总结
+
+## 处理器内存模型
+
+## jmm 处理器内存模型与顺序一致性内存模型之间的关系
+
+## jmm的设计 
+
+## jmm的内存可见性
+
+## jsr-133对旧内存模型的修补
 
 
 
