@@ -5,4 +5,7 @@
  
 * 权限问题
 
-* 备份问题
+* 备份问题   
+
+
+[详解CentOS 6.5中安装mysql 5.7.16 linux glibc2.5 x86 64(推荐)](http://www.jb51.net/article/98915.htm)
