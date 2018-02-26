@@ -15,6 +15,7 @@
 
 [Java虚拟机规范](https://docs.oracle.com/javase/specs/)      
 
-[r大-新的Java语言规范、Java虚拟机规范](http://rednaxelafx.iteye.com/blog/1081626)    
+[r大-新的Java语言规范、Java虚拟机规范](http://rednaxelafx.iteye.com/blog/1081626)  
+[从表到里学习JVM实现](https://www.douban.com/doulist/2545443/)
 
 [Java JVM怎么学习啊？从哪方面入手？](https://www.zhihu.com/question/20097631)   
