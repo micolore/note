@@ -39,5 +39,42 @@
 * 使 frame数量最少
 * 避免 404错误
   
- [20 种提升网页速度的技巧](https://www.ibm.com/developerworks/cn/web/wa-speedweb/index.html)   
- [如何提高优化网站性能的30条规则方法](http://houshidai.com/internet/yahoo-optimize-web-rules.html)
+  ## 常见处理方案 按照等级划分
+ *  Parallelize downloads across hostnames
+ *  Leverage browser caching
+ *  Combine external JavaScript
+ *  Serve static content from a cookieless domain
+ *  Minimize redirects
+ *  Minimize/reduce DNS lookups
+ *  Remove query strings from static resources
+ *  Specify a Vary: Accept-Encoding header
+ *  Specify a cache validator
+ *  Avoid bad requests
+ *  Combine external CSS
+ *  Minimize request size
+ *  Make javascript and css external
+ *  Avoid CSS expressions
+ *  Put CSS at top
+ *  Make fewer HTTP requests
+ *  Add Expires headers
+ *  Compress components with gzip
+ *  Put JavaScript at bottom
+ *  Minify JavaScript and CSS
+ *  Remove duplicate JavaScript and CSS
+ *  Configure entity tags (ETags)
+ *  Make AJAX cacheable
+ *  Use GET for AJAX requests
+ *  Reduce the number of DOM elements
+ *  Avoid HTTP 404 (Not Found) error
+ *  Reduce cookie size
+ *  Use cookie-free domains
+ *  Avoid AlphaImageLoader filter
+ *  Do not scale images in HTML
+ *  Make favicon small and cacheable
+ 
+
+ [20 种提升网页速度的技巧](https://www.ibm.com/developerworks/cn/web/wa-speedweb/index.html)    
+
+ [如何提高优化网站性能的30条规则方法](http://houshidai.com/internet/yahoo-optimize-web-rules.html)  
+ 
+ [yahoo developer performance rules](https://developer.yahoo.com/performance/rules.html#num_http)   
