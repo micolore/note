@@ -92,7 +92,7 @@
  *  Add an Expires or a Cache-Control Header
  *  Gzip Components
  
-
+![]()
  [20 种提升网页速度的技巧](https://www.ibm.com/developerworks/cn/web/wa-speedweb/index.html)    
 
  [如何提高优化网站性能的30条规则方法](http://houshidai.com/internet/yahoo-optimize-web-rules.html)  
