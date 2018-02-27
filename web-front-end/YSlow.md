@@ -71,6 +71,26 @@
  *  Avoid AlphaImageLoader filter
  *  Do not scale images in HTML
  *  Make favicon small and cacheable
+ *  Flush the Buffer Early
+ *  Post-load Components
+ *  Preload Components
+ *  Split Components Across Domains
+ *  Minimize the Number of iframes
+ *  No 404s
+ *  Use Cookie-free Domains for Components
+ *  Minimize DOM Access
+ *  Develop Smart Event Handlers
+ *  Choose <link> over @import
+ *  Avoid Filters
+ *  Optimize Images
+ *  Optimize CSS Sprites
+ *  Don't Scale Images in HTML
+ *  Keep Components under 25K
+ *  Pack Components into a Multipart Document
+ *  Avoid Empty Image src
+ *  Use a Content Delivery Network
+ *  Add an Expires or a Cache-Control Header
+ *  Gzip Components
  
 
  [20 种提升网页速度的技巧](https://www.ibm.com/developerworks/cn/web/wa-speedweb/index.html)    
