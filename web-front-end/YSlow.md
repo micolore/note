@@ -77,4 +77,4 @@
 
  [如何提高优化网站性能的30条规则方法](http://houshidai.com/internet/yahoo-optimize-web-rules.html)  
  
- [yahoo developer performance rules](https://developer.yahoo.com/performance/rules.html#num_http)   
+ [yahoo developer performance rules](https://developer.yahoo.com/performance/rules.html)   
