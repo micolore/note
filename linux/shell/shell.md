@@ -97,7 +97,9 @@ greeting="hello, "$your_name" !"
 greeting_1="hello, ${your_name} !"
 echo $greeting $greeting_1
 
+```
 ### 获取字符串长度
+
 ```
 string="abcd"
 echo ${#string} #输出 4
@@ -149,8 +151,8 @@ length=${#array_name[*]}
 # 取得数组单个元素的长度
 lengthn=${#array_name[n]}
 
-## Shell 注释
 ```
+## Shell 注释
 #--------------------------------------------
 # 这是一个注释
 # author：菜鸟教程
