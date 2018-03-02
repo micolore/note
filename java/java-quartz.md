@@ -1,10 +1,5 @@
 # quartz
 
-
-## spirng quartz
-
-## quartz
-
 ## Cron Trigger Tutorial 
 
 ### Cron Expressions
