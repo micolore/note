@@ -1,10 +1,15 @@
 # AWK
-
-# hello work 
+  行处理文件 
+##  hello work 
 ```
  //不换行
  awk '{printf $1, $4}' 0306.txt  
  awk '{print  $1, $4}' 0306.txt 
+```
+##  语法
+```
+awk [选项参数] 'script' var=value file(s)    
+awk [选项参数] -f scriptfile var=value file(s)
 ```
 ## 添加条件
 ```
@@ -37,6 +42,12 @@ awk  'BEGIN{FS=":"} {print $1,$3,$6}' /etc/passwd
 awk  -F: '{print $1,$3,$6}' /etc/passwd  
 
 awk  -F: '{print $1,$3,$6}' OFS="\t" /etc/passwd   
+
+//先使用空格后用逗号
+awk -F '[ ,]'  '{print $1,$2,$5}'   log.txt
+
+//设置变量 修改  输出
+awk -va=1 '{print $1,$1+a}' log.txt
 
 ```
 
@@ -83,6 +94,23 @@ ps aux | awk 'NR!=1{a[$1]+=$6;} END { for(i in a) print i ", " a[i]"KB";}'
 # awk脚本
 
 
+##  实用的
+```
+//从file文件中找出长度大于80的行
+awk 'length>80' file
+
+//按连接数查看客户端IP
+netstat -ntu | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -nr  
+
+//打印99乘法表
+seq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;i<=NF;i++)printf("%dx%d=%d%s", i, NR, i*NR, i==NR?"\n":"\t")}'
+
+```
+
+# 其他命令的区别 
+ grep 更适合单纯的查找或匹配文本  
+ sed 更适合编辑匹配到的文本   
+ awk 更适合格式化文本，对文本进行较复杂格式处理   
 
 
 
