@@ -111,6 +111,9 @@ seq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;i<=NF;i++)printf("%dx%d=%d%s", i, NR,
  grep 更适合单纯的查找或匹配文本  
  sed 更适合编辑匹配到的文本   
  awk 更适合格式化文本，对文本进行较复杂格式处理   
+ 
+ # 
+[awk-ibm](https://www.ibm.com/developerworks/cn/education/aix/au-gawk/)
 
 
 
