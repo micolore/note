@@ -75,6 +75,7 @@ else print > "3.txt" }' netstat.txt
 ```
 awk 'NR!=1{a[$6]++;} END {for (i in a) print i ", " a[i];}' netstat.txt
 
+//统计每个用户的进程的占了多少内存
 ps aux | awk 'NR!=1{a[$1]+=$6;} END { for(i in a) print i ", " a[i]"KB";}'
 
 ```
