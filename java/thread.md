@@ -74,6 +74,97 @@
                 cancelAcquire(node);
         }
     }
+    
+    //自旋
+    
+     /**
+     * Inserts node into queue, initializing if necessary. See picture above.
+     * @param node the node to insert
+     * @return node's predecessor
+     */
+    private Node enq(final Node node) {
+        for (;;) {
+            Node t = tail;
+            if (t == null) { // Must initialize
+                if (compareAndSetHead(new Node()))
+                    tail = head;
+            } else {
+                node.prev = t;
+                if (compareAndSetTail(t, node)) {
+                    t.next = node;
+                    return t;
+                }
+            }
+        }
+    }
+
+  //挂起
+  /**
+     * Acquires in exclusive uninterruptible mode for thread already in
+     * queue. Used by condition wait methods as well as acquire.
+     *
+     * @param node the node
+     * @param arg the acquire argument
+     * @return {@code true} if interrupted while waiting
+     */
+    final boolean acquireQueued(final Node node, int arg) {
+        boolean failed = true;
+        try {
+            boolean interrupted = false;
+            for (;;) {
+                final Node p = node.predecessor();
+                if (p == head && tryAcquire(arg)) {
+                    setHead(node);
+                    p.next = null; // help GC
+                    failed = false;
+                    return interrupted;
+                }
+                if (shouldParkAfterFailedAcquire(p, node) &&
+                    parkAndCheckInterrupt())
+                    interrupted = true;
+            }
+        } finally {
+            if (failed)
+                cancelAcquire(node);
+        }
+    }
+    
+     /**
+     * Checks and updates status for a node that failed to acquire.
+     * Returns true if thread should block. This is the main signal
+     * control in all acquire loops.  Requires that pred == node.prev.
+     *
+     * @param pred node's predecessor holding status
+     * @param node the node
+     * @return {@code true} if thread should block
+     */
+    private static boolean shouldParkAfterFailedAcquire(Node pred, Node node) {
+        int ws = pred.waitStatus;
+        if (ws == Node.SIGNAL)
+            /*
+             * This node has already set status asking a release
+             * to signal it, so it can safely park.
+             */
+            return true;
+        if (ws > 0) {
+            /*
+             * Predecessor was cancelled. Skip over predecessors and
+             * indicate retry.
+             */
+            do {
+                node.prev = pred = pred.prev;
+            } while (pred.waitStatus > 0);
+            pred.next = node;
+        } else {
+            /*
+             * waitStatus must be 0 or PROPAGATE.  Indicate that we
+             * need a signal, but don't park yet.  Caller will need to
+             * retry to make sure it cannot acquire before parking.
+             */
+            compareAndSetWaitStatus(pred, ws, Node.SIGNAL);
+        }
+        return false;
+    }
 
 ```
 
