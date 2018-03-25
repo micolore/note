@@ -7,7 +7,9 @@
 ### jvm 的结构 
 程序运行之后具体的每个步骤都做了什么事情,会有哪些风险出现？怎么观察具体的信息来验证我们的判断？   
 比如字符串存到哪里？数组集合又存到什么地方？
-[]()
+![jvm](https://github.com/micolore/blogs/blob/master/java/img/jvm/jvm-1.jpg)    
+
+![jvm2](https://github.com/micolore/blogs/blob/master/java/img/jvm/jvm-2.png)
 
 
 
