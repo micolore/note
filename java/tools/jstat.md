@@ -21,7 +21,7 @@ jstat工具特别强大，有众多的可选项，详细查看堆内各个部分
 
 ### 语法结构：  
 Usage: jstat -help|-options       
-       jstat -<option> [-t] [-h<lines>] <vmid> [<interval> [<count>]]       
+       jstat -<option> [-t] [-h<lines>] <vmid> [<interval> 间隔时间 [<count>] 抽样次数]       
 #### 参数解释：   
 Options — 选项，我们一般使用 -gcutil 查看gc情况比较多   
 vmid    — VM的进程号，即当前运行的java进程号   
@@ -117,5 +117,13 @@ gc分为full gc 跟 minor gc，当每一块区满的时候都会引发gc。
 * TT： 持有次数限制         
 * MTT ： 最大持有次数限制
 
+* S0C、S1C、S0U、S1U：Survivor 0/1区容量（Capacity）和使用量（Used）
+* EC、EU：Eden区容量和使用量
+* OC、OU：年老代容量和使用量
+* PC、PU：永久代容量和使用量
+* YGC、YGT：年轻代GC次数和GC耗时
+* FGC、FGCT：Full GC次数和Full GC耗时
+* GCT：GC总耗时
 
-
+> 堆内存 = 年轻代 + 年老代 + 永久代
+年轻代 = Eden区 + 两个Survivor区（From和To）
