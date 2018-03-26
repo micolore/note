@@ -9,7 +9,18 @@
 比如字符串存到哪里？数组集合又存到什么地方？
 ![jvm](https://github.com/micolore/blogs/blob/master/java/img/jvm/jvm-1.jpg)    
 
-![jvm2](https://github.com/micolore/blogs/blob/master/java/img/jvm/jvm-2.png)
+[//]：(https://github.com/micolore/blogs/blob/master/java/img/jvm/jvm-2.png)
+
+## jvm基本特征
+* 基于栈的体系结构
+ 求值栈(操作数栈、表达式栈)与调用栈
+* 动态加载程序
+* 安全性
+* 自动内存管理
+* 多线程支持
+* 与本地库的交互
+
+
 
 
 
