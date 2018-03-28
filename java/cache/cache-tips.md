@@ -43,9 +43,10 @@ public object GetProductListNew()
 
 ### 缓存雪崩
 概念：  
-    当缓存服务器重启或者大量缓存集中在某一个时间段失效，这样在失效的时候，也会给后端系统(比如DB)带来很大压力。    
-解决思路:  
+    当缓存服务器重启或者大量缓存集中在某一个时间段失效，这样在失效的时候，也会给后端系统(比如DB)带来很大压力。   
+解决思路:
 1. 在缓存失效后，通过加锁或者队列来控制读数据库写缓存的线程数量。比如对某个key只允许一个线程查询数据和写缓存，其他线程等待。
+   相应的会减少系统的吞吐量为代价
 2. 不同的key，设置不同的过期时间，让缓存失效的时间点尽量均匀。
 3. 做二级缓存，A1为原始缓存，A2为拷贝缓存，A1失效时，可以访问A2，A1缓存失效时间设置为短期，A2设置为长期（此点为补充）
 
@@ -77,6 +78,51 @@ public object GetProductListNew()
             }
         } 
 ```
+使用互斥锁:   
+业界比较常用的做法，是使用mutex。简单地来说，就是在缓存失效的时候（判断拿出来的值为空），不是立即去load db，而是先使用缓存工具的某些带成功操作返回值的操作（比如Redis的SETNX或者Memcache的ADD）去set一个mutex key，当操作返回成功时，再进行load db的操作并回设缓存；否则，就重试整个get缓存的方法。
+SETNX，是「SET if Not eXists」的缩写，也就是只有不存在的时候才设置，可以利用它来实现锁的效果。在redis2.6.1之前版本未实现setnx的过期时间
+```
+//2.6.1前单机版本锁  
+String get(String key) {    
+   String value = redis.get(key);    
+   if (value  == null) {    
+    if (redis.setnx(key_mutex, "1")) {    
+        // 3 min timeout to avoid mutex holder crash    
+        redis.expire(key_mutex, 3 * 60)    
+        value = db.get(key);    
+        redis.set(key, value);    
+        redis.delete(key_mutex);    
+    } else {    
+        //其他线程休息50毫秒后重试    
+        Thread.sleep(50);    
+        get(key);    
+    }    
+  }    
+}  
+
+public String get(key) {  
+      String value = redis.get(key);  
+      if (value == null) { //代表缓存值过期  
+          //设置3min的超时，防止del操作失败的时候，下次缓存过期一直不能load db  
+          if (redis.setnx(key_mutex, 1, 3 * 60) == 1) {  //代表设置成功  
+               value = db.get(key);  
+                      redis.set(key, value, expire_secs);  
+                      redis.del(key_mutex);  
+              } else {  //这个时候代表同时候的其他线程已经load db并回设到缓存了，这时候重试获取缓存值即可  
+                      sleep(50);  
+                      get(key);  //重试  
+              }  
+          } else {  
+              return value;        
+          }  
+ }  
+
+
+
+```
+
+
+
 
 ### 缓存预热
 缓存预热就是系统上线后，将相关的缓存数据直接加载到缓存系统。这样避免，用户请求的时候，再去加载相关的数据   
