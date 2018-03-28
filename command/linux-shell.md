@@ -51,3 +51,10 @@ source ~/github/profiles/my_bash_init.sh
 ### 终端下正确设置 ALT 键和 BackSpace 键
 http://www.skywind.me/blog/archives/2021
 
+###   打印指定名称的pid并且kill掉
+ps -ef | grep tomcat-tuiguang/ | grep -v grep | awk '{print $2}'  | sed -e "s/^/kill -9 /g" | sh -
+
+###  打印指定名称的pic并且kill掉
+ps -ef | grep tomcat-tuiguang/ | grep -v grep | awk '{print $2}'
+
+
