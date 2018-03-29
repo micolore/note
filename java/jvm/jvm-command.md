@@ -43,56 +43,58 @@ jmap -dump:live,format=b,file=data.hprof 2058
 jhat data.hprof  
 #执行成功后，访问http://localhost:7000即可查看内存信息。（首先把7000端口打开）
 
-Attaching to process ID 31846, please wait...
-Debugger attached successfully.
-Server compiler detected.
-JVM version is 24.71-b01
-
-using thread-local object allocation.
-Parallel GC with 4 thread(s)//GC 方式
-
-Heap Configuration: //堆内存初始化配置
-   MinHeapFreeRatio = 0 //对应jvm启动参数-XX:MinHeapFreeRatio设置JVM堆最小空闲比率(default 40)
-   MaxHeapFreeRatio = 100 //对应jvm启动参数 -XX:MaxHeapFreeRatio设置JVM堆最大空闲比率(default 70)
-   MaxHeapSize      = 2082471936 (1986.0MB) //对应jvm启动参数-XX:MaxHeapSize=设置JVM堆的最大大小
-   NewSize          = 1310720 (1.25MB)//对应jvm启动参数-XX:NewSize=设置JVM堆的‘新生代’的默认大小
-   MaxNewSize       = 17592186044415 MB//对应jvm启动参数-XX:MaxNewSize=设置JVM堆的‘新生代’的最大大小
-   OldSize          = 5439488 (5.1875MB)//对应jvm启动参数-XX:OldSize=<value>:设置JVM堆的‘老生代’的大小
-   NewRatio         = 2 //对应jvm启动参数-XX:NewRatio=:‘新生代’和‘老生代’的大小比率
-   SurvivorRatio    = 8 //对应jvm启动参数-XX:SurvivorRatio=设置年轻代中Eden区与Survivor区的大小比值 
-   PermSize         = 21757952 (20.75MB)  //对应jvm启动参数-XX:PermSize=<value>:设置JVM堆的‘永生代’的初始大小
-   MaxPermSize      = 85983232 (82.0MB)//对应jvm启动参数-XX:MaxPermSize=<value>:设置JVM堆的‘永生代’的最大大小
-   G1HeapRegionSize = 0 (0.0MB)
 jmap -heap:   
-Heap Usage://堆内存使用情况
-PS Young Generation
-Eden Space://Eden区内存分布
-   capacity = 33030144 (31.5MB)//Eden区总容量
-   used     = 1524040 (1.4534378051757812MB)  //Eden区已使用
-   free     = 31506104 (30.04656219482422MB)  //Eden区剩余容量
-   4.614088270399305% used //Eden区使用比率
-From Space:  //其中一个Survivor区的内存分布
-   capacity = 5242880 (5.0MB)
-   used     = 0 (0.0MB)
-   free     = 5242880 (5.0MB)
-   0.0% used
-To Space:  //另一个Survivor区的内存分布
-   capacity = 5242880 (5.0MB)
-   used     = 0 (0.0MB)
-   free     = 5242880 (5.0MB)
-   0.0% used
-PS Old Generation //当前的Old区内存分布
-   capacity = 86507520 (82.5MB)
-   used     = 0 (0.0MB)
-   free     = 86507520 (82.5MB)
-   0.0% used
-PS Perm Generation//当前的 “永生代” 内存分布
-   capacity = 22020096 (21.0MB)
-   used     = 2496528 (2.3808746337890625MB)
-   free     = 19523568 (18.619125366210938MB)
-   11.337498256138392% used
 
-670 interned Strings occupying 43720 bytes.
+Attaching to process ID 31846, please wait...   
+Debugger attached successfully.   
+Server compiler detected.   
+JVM version is 24.71-b01   
+
+using thread-local object allocation.   
+Parallel GC with 4 thread(s)//GC 方式   
+
+Heap Configuration: //堆内存初始化配置      
+   MinHeapFreeRatio = 0 //对应jvm启动参数-XX:MinHeapFreeRatio设置JVM堆最小空闲比率(default 40)     
+   MaxHeapFreeRatio = 100 //对应jvm启动参数 -XX:MaxHeapFreeRatio设置JVM堆最大空闲比率(default 70)   
+   MaxHeapSize      = 2082471936 (1986.0MB) //对应jvm启动参数-XX:MaxHeapSize=设置JVM堆的最大大小   
+   NewSize          = 1310720 (1.25MB)//对应jvm启动参数-XX:NewSize=设置JVM堆的‘新生代’的默认大小   
+   MaxNewSize       = 17592186044415 MB//对应jvm启动参数-XX:MaxNewSize=设置JVM堆的‘新生代’的最大大小   
+   OldSize          = 5439488 (5.1875MB)//对应jvm启动参数-XX:OldSize=<value>:设置JVM堆的‘老生代’的大小   
+   NewRatio         = 2 //对应jvm启动参数-XX:NewRatio=:‘新生代’和‘老生代’的大小比率   
+   SurvivorRatio    = 8 //对应jvm启动参数-XX:SurvivorRatio=设置年轻代中Eden区与Survivor区的大小比值     
+   PermSize         = 21757952 (20.75MB)  //对应jvm启动参数-XX:PermSize=<value>:设置JVM堆的‘永生代’的初始大小   
+   MaxPermSize      = 85983232 (82.0MB)//对应jvm启动参数-XX:MaxPermSize=<value>:设置JVM堆的‘永生代’的最大大小    
+   G1HeapRegionSize = 0 (0.0MB)   
+   
+Heap Usage://堆内存使用情况    
+PS Young Generation   
+Eden Space://Eden区内存分布   
+   capacity = 33030144 (31.5MB)//Eden区总容量   
+   used     = 1524040 (1.4534378051757812MB)  //Eden区已使用   
+   free     = 31506104 (30.04656219482422MB)  //Eden区剩余容量   
+   4.614088270399305% used //Eden区使用比率   
+From Space:  //其中一个Survivor区的内存分布   
+   capacity = 5242880 (5.0MB)   
+   used     = 0 (0.0MB)   
+   free     = 5242880 (5.0MB)  
+   0.0% used   
+To Space:  //另一个Survivor区的内存分布   
+   capacity = 5242880 (5.0MB)   
+   used     = 0 (0.0MB)   
+   free     = 5242880 (5.0MB)   
+   0.0% used   
+PS Old Generation //当前的Old区内存分布   
+   capacity = 86507520 (82.5MB)   
+   used     = 0 (0.0MB)   
+   free     = 86507520 (82.5MB)    
+   0.0% used    
+PS Perm Generation//当前的 “永生代” 内存分布   
+   capacity = 22020096 (21.0MB)   
+   used     = 2496528 (2.3808746337890625MB)    
+   free     = 19523568 (18.619125366210938MB)    
+   11.337498256138392% used   
+
+670 interned Strings occupying 43720 bytes.      
 
 ## jinfo
 #查看java进程的配置信息
@@ -159,8 +161,3 @@ ECMX：年轻代中Eden（伊甸园）的最大容量 (字节)
 DSS：当前需要survivor（幸存区）的容量 (字节)（Eden区已满）   
 TT： 持有次数限制   
 MTT ： 最大持有次数限制   
-
-
-
-
- 
