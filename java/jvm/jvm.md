@@ -22,8 +22,8 @@
 
 4. Java堆：被所有线程共享的一块存储区域，在虚拟机启动时创建，它是JVM用来存储对象实例以及数组值的区域，可以认为Java中所有通过new创建的对象的内存都在此分配。  
 Java堆在JVM启动的时候就被创建，堆中储存了各种对象，这些对象被自动管理内存系统（Automatic Storage Management System，也即是常说的 Garbage Collector(垃圾回收器)所管理。这些对象无需、也无法显示地被销毁。
-JVM将Heap分为两块：新生代New Generation和旧生代Old Generation。  
-Note:    
+JVM将Heap分为两块：新生代New Generation和旧生代Old Generation。   
+Note:     
 堆在JVM是所有线程共享的，因此在其上进行对象内存的分配均需要进行加锁，这也是new开销比较大的原因。      
 鉴于上面的原因，Sun Hotspot JVM为了提升对象内存分配的效率，对于所创建的线程都会分配一块独立的空间，这块空间又称为TLAB   
 TLAB仅作用于新生代的Eden Space，因此在编写Java程序时，通常多个小的对象比大的对象分配起来更加高效    
