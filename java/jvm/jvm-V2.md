@@ -1,4 +1,4 @@
-# 看了很多知识点就是在需要的时候不知道从什么地方下手
+# 
 
 ##  开始
 为什么要看jvm？应该研究到什么程度才能算是了解了jvm？
@@ -31,5 +31,4 @@ java -client -XX:+PrintFlagsFinal Benchmark  一个按字母排序的590个参�
 java -server -XX:+UnlockExperimentalVMOptions -XX:+UnlockDiagnosticVMOptions -XX:+PrintFlagsFinal Benchmark  724     
 
 java -server -XX:+UnlockExperimentalVMOptions -XX:+UnlockDiagnosticVMOptions -XX:+PrintFlagsFinal Benchmark | grep ":"       
-
 java -server -XX:+PrintCommandLineFlags Benchmark    
