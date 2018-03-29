@@ -60,6 +60,9 @@ report
 -XX:+PrintHeapAtGC：打印GC前后的详细堆栈信息    
 -Xloggc:filename：把相关日志信息记录到文件以便分析.
 
+-XX:+HeapDumpOnOutOfMemoryError  发生内存泄露时抓拍下当时的内存状态
+-XX:+HeapDumpOnCtrlBreak   不想等到发生崩溃性的错误时才获得堆转储文件
+
 ## 什么是堆Dump
 堆Dump是反应Java堆使用情况的内存镜像，其中主要包括系统信息、虚拟机属性、完整的线程Dump、所有类和对象的状态等。 一般，在内存不足、GC异常等情况下，我们就会怀疑有内存泄露。这个时候我们就可以制作堆Dump来查看具体情况。分析原因。
 
