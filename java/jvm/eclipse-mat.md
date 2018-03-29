@@ -34,11 +34,17 @@ jmap -dump,format=b,file=data.hprof pid  跟上面的区别在于live
 action
 * histogram 直方图
 * dominator tree  
-* top consumer 消费者
+* top consumer 
+Top Consumers query lists the largest objects grouped by class, class loader, and package. To run the query select Top Consumers in the Leak Identification category 
 * duplicate class 重复的类
 report
 * leak suspects
 * top components
+* Finding Responsible Objects 寻找责任对象
+* Querying Heap Objects (OQL)  
+* Analyze Class Loader
+* Analyzing Finalizer 分析终结者
+* Comparing Objects
 
 ##  OOM
 
