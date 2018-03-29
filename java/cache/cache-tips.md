@@ -1,214 +1,164 @@
-# 广告接口缓存修改
+# cache tips
 
-## 涉及到的缓存数据
-* ComPagin 广告推广计划
-* AdGroup  广告组
-* AdInfo  广告详情
-* AdPlaceStrategy 广告位策略
-* AdPlace   广告位
-* AdCreative 广告创意
-* Offer  offer信息
-* Meta 媒体信息   pub_key
+## 常见问题
 
-## CM_LIST接口梳理
-1. 处理header头
+### 缓存穿透
+概念:   
+一般的缓存系统，都是按照key去缓存查询，如果不存在对应的value，就应该去后端系统查找（比如DB）。
+如果key对应的value是一定不存在的，并且对该key并发请求量很大，就会对后端系统造成很大的压力。这就叫做缓存穿透。    
+解决思路：
+1. 对查询结果为空的情况也进行缓存，缓存时间设置短一点，或者该key对应的数据insert了之后清理缓存。
+2. 对一定不存在的key进行过滤。可以把所有的可能存在的key放到一个大的Bitmap中，查询时通过该bitmap过滤。
+
 ```
-		Header head = Header.getHeader(request);
-```
- 注意关键参数: adType
-2.  获取ad_place_id,from cache
-```
-		if(Utils.isObjectEmpty(adPlaceId) && StringUtils.isNotEmpty(head.getPubKey())){
-					adPlaceId = getAdPlaceIdByRedis(head.getPubKey(),adType);
-				}
-```
-3. 判断是否是test,不是需要激励PV信息
-```
-		Boolean isTest = head.getIsTest();//获取头部传参的isTest
-		if(isTest){//如果是test 不产生pv
-					msg = new StringBuffer();
-		}
-```
-4. 拉取广告位策略
-```
-        String adPlaceStrategyId = null;
-    	if(Utils.isObjectNotEmpty(adPlace)){
-    		adPlaceStrategyId = adPlace.getStrategyId() == null ? "" : adPlace.getStrategyId() + "";
-    	} 	
-    	获取广告位策略
-    	AdPlaceStrategy adPlaceStrategy = null;
-    	if(Utils.isObjectNotEmpty(adPlaceStrategyId)){
-    		adPlaceStrategy = getAdPlaceStrategy(adPlaceStrategyId);
-    	}
-  
-```
-如果广告策略为空,设置默认策略
-```
-if(adPlaceStrategy == null){
-			adPlaceStrategy = new AdPlaceStrategy();
-			adPlaceStrategy.setIsAffiliate(1);//默认拉取联盟
-			adPlaceStrategy.setIsFreq(0);//默认不控制频次
-			// 默认设置点击控制  次数：1   默认设置展示控制 次数 3
-			adPlaceStrategy.setClickNum(1);
-			adPlaceStrategy.setShowNum(3);
-		}
-```
-5. 拉取媒体信息
-```
-DspMedia media = getMediaByPubKey(head.getPubKey());
+public object GetProductListNew()
+        {
+            const int cacheTime = 30;
+            const string cacheKey = "product_list";
+
+            var cacheValue = CacheHelper.Get(cacheKey);
+            if (cacheValue != null)
+                return cacheValue;
+                
+            cacheValue = CacheHelper.Get(cacheKey);
+            if (cacheValue != null)
+            {
+                return cacheValue;
+            }
+            else
+            {
+                cacheValue = GetProductListFromDB(); //数据库查询不到，为空。
+                
+                if (cacheValue == null)
+                {
+                    cacheValue = string.Empty; //如果发现为空，设置个默认值，也缓存起来。                
+                }
+                CacheHelper.Add(cacheKey, cacheValue, cacheTime);
+                
+                return cacheValue;
+            }
+        }  
+
 ```
 
-6. 判断是不是白名单用户
+### 缓存雪崩
+概念：  
+    当缓存服务器重启或者大量缓存集中在某一个时间段失效，这样在失效的时候，也会给后端系统(比如DB)带来很大压力。   
+再详细点就是:   
+1. 服务提供者不可用
+2. 重试加大流量
+3. 服务调用者不可用
+造成不可用的原因可能有多个:  
+1. 硬件故障
+2. 程序Bug
+3. 缓存击穿
+4. 用户大量请求
 
-7. 不是白名单则判断是否运营 ,不满足直接进行返回。~
+重试加大流量的有两个原因：  
+1. 用户重试
+2. 代码逻辑重试
 
-8. 处理limit 根据请求的看是否需要给默认值
-   width、height 同理，可以给默认值
-   
-9. 然后获取ad_info列表 主要逻辑
-*  判断是不是白名单 如果_imsi 不为空就是在白名单 不重点看
-*  重点看不是白名单的逻辑
-*  根据广告类型获取ad_info_list
-*  循环处理ad_info_list
-*  获取ad_info 所在的广告组
-*  根据计划check时间是否满足
-*  check total_sent & day_sent
-*  restulAdInfo() 各种check是不是满足需要发送
-*  满足继续往下走
-*  check 分辨率是否满足尺寸要求  循环广告创意数组
-*  广告资源offer
-*  判断离线offer(第三方)数量
-*  自家offer
-*  继续判断自家offer的判断
-*  限制广告分类、广告位屏蔽广告行业要限制
-*  拉取offer离线广告 
-*  增加广告上限
+服务调用者不可用的原因：   
+同步等待造成的资源耗尽
 
-## 修改之前所用到的缓存
+具体的解决策略:  
+1. 流量控制
+* 网关限流
+* 用户交互限流
+* 关闭重试
+2. 改进缓存模式
+* 缓存预加载
+* 同步改为异步刷新
+3. 服务自动扩容
+* AWS的auto scaling
+4. 服务调用者降级服务
+* 资源隔离
+* 对依赖服务进行分类
+* 不可用服务的调用快速失败
 
-1.  getAdPlaceIdByRedis(),根据pubKey adType 获取广告位id ,返回单个adplace_id,如果查不到会查数据库
+解决思路:
+1. 在缓存失效后，通过加锁或者队列来控制读数据库写缓存的线程数量。比如对某个key只允许一个线程查询数据和写缓存，其他线程等待。
+   相应的会减少系统的吞吐量为代价
+2. 不同的key，设置不同的过期时间，让缓存失效的时间点尽量均匀。
+3. 做二级缓存，A1为原始缓存，A2为拷贝缓存，A1失效时，可以访问A2，A1缓存失效时间设置为短期，A2设置为长期（此点为补充）
+
 ```
-	String adPlaceKey = RedisConstants.JEDIS_AD_PLACE_ID + adType;
+ public object GetProductListNew()
+        {
+            const int cacheTime = 30;
+            const string cacheKey = "product_list";
+            //缓存标记。
+            const string cacheSign = cacheKey + "_sign";
+            
+            var sign = CacheHelper.Get(cacheSign);
+            //获取缓存值
+            var cacheValue = CacheHelper.Get(cacheKey);
+            if (sign != null)
+            {
+                return cacheValue; //未过期，直接返回。
+            }
+            else
+            {
+                CacheHelper.Add(cacheSign, "1", cacheTime);
+                ThreadPool.QueueUserWorkItem((arg) =>
+                {
+                    cacheValue = GetProductListFromDB(); //这里一般是 sql查询数据。
+                    CacheHelper.Add(cacheKey, cacheValue, cacheTime*2); //日期设缓存时间的2倍，用于脏读。                
+                });
+                
+                return cacheValue;
+            }
+        } 
 ```
-2.  getAdPlace 获取广告位,返回单个AdPlace对象
-``` 
-	byte[] adPlaceByte = (RedisConstants.JEDIS_AD_PLACE + adPlaceId).getBytes();
+使用互斥锁:   
+业界比较常用的做法，是使用mutex。简单地来说，就是在缓存失效的时候（判断拿出来的值为空），不是立即去load db，而是先使用缓存工具的某些带成功操作返回值的操作（比如Redis的SETNX或者Memcache的ADD）去set一个mutex key，当操作返回成功时，再进行load db的操作并回设缓存；否则，就重试整个get缓存的方法。
+SETNX，是「SET if Not eXists」的缩写，也就是只有不存在的时候才设置，可以利用它来实现锁的效果。在redis2.6.1之前版本未实现setnx的过期时间
 ```
-3.  getAdPlaceStrategy(),获取广告位策略,返回 单个 AdPlaceStrategy对象
-```
-	byte[] adPlaceStrategyByte = (RedisConstants.JEDIS_AD_PLACE_STRATEGY + adPlaceStrategyId).getBytes();
-```
-4. getMediaByPubKey(String pubKey) 获取用户媒体,返回单个DspMedia对象
-```
-	byte [] mediaByte = (RedisConstants.JEDIS_AD_DSP_MEDIA + pubKey).getBytes();
+//2.6.1前单机版本锁  
+String get(String key) {    
+   String value = redis.get(key);    
+   if (value  == null) {    
+    if (redis.setnx(key_mutex, "1")) {    
+        // 3 min timeout to avoid mutex holder crash    
+        redis.expire(key_mutex, 3 * 60)    
+        value = db.get(key);    
+        redis.set(key, value);    
+        redis.delete(key_mutex);    
+    } else {    
+        //其他线程休息50毫秒后重试    
+        Thread.sleep(50);    
+        get(key);    
+    }    
+  }    
+}  
+
+public String get(key) {  
+      String value = redis.get(key);  
+      if (value == null) { //代表缓存值过期  
+          //设置3min的超时，防止del操作失败的时候，下次缓存过期一直不能load db  
+          if (redis.setnx(key_mutex, 1, 3 * 60) == 1) {  //代表设置成功  
+               value = db.get(key);  
+                      redis.set(key, value, expire_secs);  
+                      redis.del(key_mutex);  
+              } else {  //这个时候代表同时候的其他线程已经load db并回设到缓存了，这时候重试获取缓存值即可  
+                      sleep(50);  
+                      get(key);  //重试  
+              }  
+          } else {  
+              return value;        
+          }  
+ }  
+
 ```
 
-5. 白名单缓存不动
+### 缓存预热
+缓存预热就是系统上线后，将相关的缓存数据直接加载到缓存系统。这样避免，用户请求的时候，再去加载相关的数据   
+解决思路：  
+1. 直接写个缓存刷新页面，上线时手工操作下。 
+2. 数据量不大，可以在WEB系统启动的时候加载。
+3. 定时刷新缓存，
 
-6. getAdInfo() 主要动的缓存
-
-6.1 查询广告--分广告位类型来查询 缩小范围,返回List<AdInfo>，如果为空直接查询数据库
-```
-    byte[] adListByte = (RedisConstants.JEDIS_AD_LIST + adType).getBytes();
-```
-6.2 查询组发送总量根据group_id
-```
-String totalSentString = RedisHelper.hget(jc, RedisConstants.JEDIS_BUDGET_NUMBER_TOTAL, adGroup.getGroupId()+"");
-```
-6.3 查询组日发送数量根据group_id&组id
-```
-String daySentString = RedisHelper.hget(jc, RedisConstants.JEDIS_BUDGET_NUMBER_DAY+localDateString, adGroup.getGroupId()+"");
-```
-6.4 获取广告创意根据广告id,返回AdCreative 数组
-```
-	String adCreativeByte = RedisConstants.JEDIS_AD_CREATIVE + tmpAd.getAdId();
-```
-6.5 获取 OfflineOffer 根据offerid 
-```
-String offlineOfferStr= RedisHelper.hget(jc,RedisConstants.JEDIS_OPERATOR_OFFER_AD_INFO,offLineOfferId);
-``
-6.6 查询自家的offer 根据offerid
-```
-	byte[] offerByte = (RedisConstants.JEDIS_OFFER_INFO + offerId).getBytes();
-```
-6.7  checkAdInfo 读取广告用户的展示点击缓存
-```
-RedisHelper.hmget(jc, RedisConstants.JEDIS_USER_AD_CODE+adId, new String[]{userMediaId+"showNum",userMediaId+"clickNum"});
-```
-6.8  拉取离线offer 返回 List<OfflineOffer>,根据country
-```
-String countryJson =RedisHelper.hget(jc, RedisConstants.JEDIS_OFFLINE_OFFER_LIST, country);
-```
-6.9 批量获取ecpm
-```
-	List<String> ecpmListStr =RedisHelper.hmget(jc, RedisConstants.JEDIS_OFFLINE_OFFER_ECPM, ecpmKey);
-```
-
-## 粗放流程
-1 根据pub_key + ad_type 获取 ad_place_id
-1.2 根据ad_plac_id 获取 ad_place 
-1.3 根据ad_place 获取 adPlaceStrategyId
-2   根据pub_key 获取 DspMedia
-3   获取ad_info 根据 head, media, adPlaceStrategy, shieldCategory, adType, limit,msg,isTest,width,height,_imsi
-3.1 根据 adPlaceStrategy  获取 adPlaceShiledCategory(屏蔽分类)
-3.2 根据 adPlaceStrategy  获取 adPlaceCategory(下发分类)
-3.3 根据ad_type 获取 List<AdInfo> 
-3.4 循环listAd 获取离线offer_ad_id& offline_id
-3.4 循环listAd 获取ad_group
-3.5 循环listAd 取出ad_group里面的Compaign
-3.6 循环listAd 从缓存中取出指定group的总量与日量
-4  restulAdInfo() 正常流程校验
-3.7 循环listAd  满足条件
-3.8 判断是不是第三方offer
-3.9 根据offer_id获取offer对象
-3.9 不是第三方offer
-3.10 同样根据offer_id 获取offer对象
-3.11 正常checkoffer的国家、运营商、语言，第三方同样也需要校验
-3.12 如何限制广告分类、广告位屏蔽广告行业要限制
-3.13 获取广告的点击、展示详情
-            如果点击或者展示数量大于广告策略的展示或者点击数量，不给广告
-
-
-## 优化的点
-
-1. String.valueOf(adType) or adType+""
-2. "" or 字符串常量
-3. 缩短接口处理时间
-
-## 修改处理逻辑
-1. ComPagin以及 Group本地缓存化
-  a)ComPagin ->  List结构存储
-  b)Group -> Map 
-            结构存储 key:compaginId value: groupList
-  c)剔除白名单广告
-
-筛选完ComPagin的时间控制后 获取满足的ComPagin IDs
-通过IDs 获取到对应的 groupLists组合成一个 list
-遍历list 根据 group中的条件 剔除不满足的group
-记录满足的groupIds
-通过groupIds 获取到所有对应的广告列表
-
-2. 正常流程广告列表缓存:
-a)剔除AdInfo查询时管理查询出的ComPagin和AdGroup 但需要关联查出其对应的AdCreativeList(现有逻辑是只查一个)
-b)缓存结构： Hash 
-	Key：xxxx+AdType
-	Field: GroupId
-	Value : [AdInfoList] (JSON格式)
-c)列表查询条件需过滤白名单广告 即 CompaginId != 12
-
-
-## 对象引用逻辑梳理
-1. 获取广告位id,根据pub_key+ad_type
-2. 然后获取广告位
-3. 然后获取广告位策略
-4. 获取媒体
-5. 根据广告位类型获取广告详情
-6. 循环处理ad_info
-  ad_offer_id、ad_id
-6.1 获取ad_group
-
-
-
-
-
-
+### 缓存更新
+缓存淘汰的策略有两种：   
+1. 定时去清理过期的缓存。
+2. 当有用户请求过来时，再判断这个请求所用到的缓存是否过期，过期的话就去底层系统得到新数据并更新缓存。
