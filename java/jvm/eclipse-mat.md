@@ -1,4 +1,4 @@
-# eclipse MAT
+# Eclipse MAT
 
 ## 什么是堆Dump
 堆Dump是反应Java堆使用情况的内存镜像，其中主要包括系统信息、虚拟机属性、完整的线程Dump、所有类和对象的状态等。 一般，在内存不足、GC异常等情况下，我们就会怀疑有内存泄露。这个时候我们就可以制作堆Dump来查看具体情况。分析原因。
@@ -47,7 +47,7 @@ report
 
 ##  OOM
 
-###  jvm调试信息
+###  jvm调试信息 
 -XX:ErrorFile=./hs_err_pid<pid>.log：如果JVM crashed，将错误日志输出到指定文件路径。        
 -XX:HeapDumpPath=./java_pid<pid>.hprof：堆内存快照的存储文件路径。      
 -XX:-HeapDumpOnOutOfMemoryError：在OOM时，输出一个dump.core文件，记录当时的堆内存快照     
