@@ -40,7 +40,7 @@ java线程之间通信由jmm (java 内存模型)控制，jmm决定一个线程�
    由于处理使用缓存读和读/写缓冲区，这使得加载和存储操作看上去可能是乱序执行      
    
 java 从代码到指令排序分别会经历下面三种排序        
-!['三种排序'](https://github.com/micolore/blogs/blob/master/java/img/java-exe-sort.png)    
+['三种排序'](https://github.com/micolore/blogs/blob/master/java/img/java-exe-sort.png)    
 对于编译器，jmm的编译器重排序规则会禁止特定类型的编译器重排序，对于处理器重排序，jmm的重排序规则要求java编译在生成   
 指令序列时，插入指定类型的内存屏障，用来禁止指定类型的处理器重排序。
 
