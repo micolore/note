@@ -1,8 +1,8 @@
 # mat  eclipse
-先使用jmap打印出来
-jmap -dump:live,format=b,file=data.hprof pid   
-jmap -dump,format=b,file=data.hprof pid  
-如果使用jhat 要设置内存防止内存不够   
+先使用jmap打印出来   
+jmap -dump:live,format=b,file=data.hprof pid   
+jmap -dump,format=b,file=data.hprof pid  跟上面的区别在于live
+如果使用jhat查看,需要设置足够内存防止内存不够   
 ## download 
 [down-load-mat](http://www.eclipse.org/mat/downloads.php)
 ##  Leak Suspects
