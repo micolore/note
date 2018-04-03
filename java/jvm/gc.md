@@ -1,10 +1,10 @@
 # 垃圾收集入门
 
 ## 主流垃圾回收收集器
-*　Serial收集器 
-*　Throughput(Parallel)收集器
-*　Concurrent(CMS)收集器
-*　G1收集器
+* Serial收集器 
+* Throughput(Parallel)收集器
+* Concurrent(CMS)收集器
+* G1收集器
 cms 与g1 称为concurrent垃圾收集器，属于低停顿收集器，当然也有代价就是消耗更多的cpu
 
 ## 概述
