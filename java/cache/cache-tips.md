@@ -33,13 +33,14 @@ public object GetProductListNew()
                 {
                     cacheValue = string.Empty; //如果发现为空，设置个默认值，也缓存起来。                
                 }
-                CacheHelper.Add(cacheKey, cacheValue, cacheTime);
-                
-                return cacheValue;
+                CacheHelper.Add(cacheKey, cacheValue, cacheTime);//设置缓存时间，可以很短
+                
+                return cacheValue;
             }
         }  
 
 ```
+> 这里还要考虑一点就是，缓存何时进行更新还是没有逻辑进行触发更新。
 
 ### 缓存雪崩
 概念：  
