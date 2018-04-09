@@ -33,7 +33,7 @@ public object GetProductListNew()
                 {
                     cacheValue = string.Empty; //如果发现为空，设置个默认值，也缓存起来。                
                 }
-                CacheHelper.Add(cacheKey, cacheValue, cacheTime);//设置缓存时间，可以很短
+                CacheHelper.Add(cacheKey, cacheValue, cacheTime);//设置缓存时间，不要太长
                 
                 return cacheValue;
             }
