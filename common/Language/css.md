@@ -42,7 +42,7 @@ li strong {
 
 ```
 
-````
+```
 strong {
      color: red;
      }
@@ -103,5 +103,34 @@ border:5px solid blue;
 }
 ```
 
+
+## 样式
+### 背景
+### 文本
+### 字体
+### 链接
+### 列表 
+### 表格
+### 轮廓
+
+## 框模型
+1. 边框（border），可以设置边框的宽窄、样式和颜色。
+2. 内边距（padding），可以设置盒子内容区与边框的间距。
+3. 外边距（margin），可以设置盒子与相邻元素盒子的间距。
+### 内边
+### 边距
+### 外边距
+### 外边距合并
+```
+* { 
+    margin:0; 
+    padding:0;
+}
+```
+[css](http://caibaojian.com/css3/properties/padding/index.htm)
+## 定位 
+###  相对
+###  绝对
+###  浮动
 
 
