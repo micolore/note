@@ -72,4 +72,5 @@
 * 血腥情人节（My Bloody Valentine）
 * 驾驭（Ride）
 
+![The School of Rock](https://github.com/micolore/note/blob/master/life/img/20ee9836356ed93476f504feb962e72a_r.jpg)
 
