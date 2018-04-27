@@ -1,28 +1,31 @@
-idea 
+# idea 
 
-a product?  
+## long time ago
+* a product?  
 
-up basic   
+* up basic   
    but how to make money ? ad ? uper?
  
-music 
+* music 
    a play music ?
-   
-   
-   
-   idea is great need long time to confirm!
+  
+ * idea is great need long time to confirm!
 
-   infomation  not symmetry
+ *  infomation  not symmetry
    
-   我能体会到第一个说地球是圆的所面临的质疑了！
+ * 我能体会到第一个说地球是圆的所面临的质疑了！
 
-   伞兵思维
+ * 伞兵思维
    
-   同样的时间我花到英语上.半年我就可以谈笑风生了.
+ * 同样的时间我花到英语上.半年我就可以谈笑风生了.
     
-   每天进行思考之前发生的与之后发生的事情，有没有什么必然的联系。大脑需要大量的练习否则就是个猪！
+ * 每天进行思考之前发生的与之后发生的事情，有没有什么必然的联系。大脑需要大量的练习否则就是个猪！
 
 
+## 20180427
+
+* 时间有限,不足以你分在其他的事情上面
+  没有恒心，也没有目标，随着时间流逝就慢慢的沦为泥沙了。  
 
 
 
