@@ -17,4 +17,4 @@
 滴水湖到小洋山，乘公交车经东海大桥到达小洋山岛
 
 ### 武功山 2018 端午
-[武功山徒步路线] http://www.mafengwo.cn/gonglve/ziyouxing/37561.html
+![武功山徒步路线] http://www.mafengwo.cn/gonglve/ziyouxing/37561.html
