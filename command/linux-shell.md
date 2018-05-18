@@ -57,8 +57,8 @@ ps -ef | grep tomcat-tuiguang/ | grep -v grep | awk '{print $2}'  | sed -e "s/^/
 ###  打印指定名称的pic并且kill掉
 ps -ef | grep tomcat-tuiguang/ | grep -v grep | awk '{print $2}'
 
-###   
-[root@www ~]# grep [-acinv] [--color=auto] '搜寻字符串' filename   
+###   grep
+[root@www ~]# grep [-acinv] [--color=auto] '搜寻字符串' filename   
 选项与参数：    
 -a ：将 binary 文件以 text 文件的方式搜寻数据   
 -c ：计算找到 '搜寻字符串' 的次数   
