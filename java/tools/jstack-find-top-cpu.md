@@ -10,3 +10,5 @@
 
 ## jca
 [IBM Thread and Monitor Dump Analyze for Java](https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=2245aa39-fa5c-4475-b891-14c205f7333c)
+## Spotify提供的Web版在线分析工具，可以将锁或条件相关联的线程聚合到一起。
+[thread check](http://spotify.github.io/threaddump-analyzer/)
