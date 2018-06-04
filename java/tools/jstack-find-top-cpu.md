@@ -6,3 +6,7 @@
 4. 执行 printf 0x%x 15248 得到 0x3b90 ,此为线程id的十六进制
 5. 执行 jstack 123|grep -A 10 3b90，得到线程堆栈信息中3b90这个线程所在行的后面10行
 6. 查看对应的堆栈信息找出可能存在问题的代码
+
+
+## jca
+[IBM Thread and Monitor Dump Analyze for Java](https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=2245aa39-fa5c-4475-b891-14c205f7333c)
