@@ -1,0 +1,8 @@
+client list 
+client kill 
+slowlog get 10  结果为查询ID、发生时间、运行时长和原命令 默认10毫秒
+log
+  redis.log 为主
+  sentinel.log 监控日志
+info
+

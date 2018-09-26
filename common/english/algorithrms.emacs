@@ -1,0 +1,10 @@
+1. refer
+2. individual
+3. enclosing
+4. terminate
+5. aliasing
+6. fragment
+7. demensional
+8. sense
+9. straightforward
+10. equivalent
