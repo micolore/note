@@ -17,3 +17,8 @@ $ update.....;
 ; 转储成json格式
 ; 使用标准的diff工具比较两个dump文件
 ; https://yq.aliyun.com/articles/62899
+
+--select count(*) from memory;
+--select * from memory order by size_in_bytes desc limit 15;
+--select sum(size_in_bytes) from memory;
+--select * from memory where type='hash' and num_elements > 10000 ;
