@@ -24,6 +24,19 @@ hello redis store
 4. 内存碎片
 
 
+数据类型
+编码方式
+    raw  简单动态字符串
+    int  整数
+    ht   字典
+    zipmap 
+    linkedlist 双端链表
+    ziplist  压缩列表 
+    intset 整数集合
+    skplist 跳跃表和字典
+数据指针
+虚拟内存
+
 
 
 
