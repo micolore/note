@@ -17,6 +17,25 @@
 
 DES加密算法是对密钥进行保密，而公开算法，包括加密和解密算法。这样，只有掌握了和发送方相同密钥的人才能解读由DES加密算法加密的密文数据    
 DES是一种分组数据加密技术（先将数据分成固定长度的小数据块，之后进行加密），速度较快，适用于大量数据加密
+```
+DES：算法DES要求密钥长度为64位密钥, 有效密钥56位。64bits=8*8*1，即8个ascii字符。
+DESede：算法DESede要求的密钥位数为192位，即192bits=64*3=8*8*3，即24个ascii字符。
+Blowfish：算法Blowfish要求密钥长度为8--448字位，即8--448(bits)。即：1个到56个ascii字符
+
+DESede密钥位数不符合时的，报错如下：
+
+java.security.InvalidKeyException: Wrong key size
+at com.sun.crypto.provider.SunJCE_x.a(DashoA12275)
+at com.sun.crypto.provider.SunJCE_i.a(DashoA12275)
+at com.sun.crypto.provider.SunJCE_h.a(DashoA12275)
+at com.sun.crypto.provider.SunJCE_h.a(DashoA12275)
+at com.sun.crypto.provider.DESedeCipher.engineInit(DashoA12275)
+at javax.crypto.Cipher.init(DashoA12275)
+at com.yourCompany.CryptUtils.encrypt(CryptUtils.java:112)
+at com.yourCompany.CryptUtils.encrypt(CryptUtils.java:144)
+at com.yourCompany.CryptUtils.main(CryptUtils.java:260)
+```
+
 
 ## AES加密算法  (对称)
 AES加密算法是密码学中的高级加密标准，该加密算法采用对称分组密码体制，密钥长度的最少支持为128、192、256，
