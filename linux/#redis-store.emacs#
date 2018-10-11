@@ -26,18 +26,15 @@ hello redis store
 
 数据类型
 编码方式
-    raw  简单动态字符串
-    int  整数
-    ht   字典
-    zipmap 
-    linkedlist 双端链表
-    ziplist  压缩列表 
-    intset 整数集合
-    skplist 跳跃表和字典
+    raw
+    int
+    ht
+    zipmap l
+    inkedlist ziplist intset
 数据指针
 虚拟内存
 
 
 
-http://redisdoc.com/server/info.html
+
 
