@@ -76,4 +76,28 @@ Permgen 或Permanent Generation,java8 称之为metabace
  -XX:+PrintGCDateStamps 精确判断gc操作之间的时间      
  -Xloggc:filename 输出到某个文件   
 
+#  概念
+## 不再引用与不再需要
+ 前者是从虚拟机的角度看对象,后者是从人的角度上看程序
+ 
+## 定义垃圾的标准是什么
+根对象与某个对象之间还有引用路径
+
+## java 对象的size byte为单位
+java.lang.Object 8  
+java.lang.Float 16  
+java.lang.Double 16  
+java.lang.Integer 16  
+java.lang.Long 16  
+java.math.BigInteger 56 (*)   
+java.lang.BigDecimal 72 (*)   
+java.lang.String 2*(Length) + 38 ± 2   
+empty java.util.Vector 80  
+object reference 4   
+float array 4*(Length) + 14 ±    
+## obj= null 有没有必要?
+如果obj是局部变量那么这样写没有任何价值，因为一旦作用域结束，虚拟机会自动收集
+
+
+
 
