@@ -105,6 +105,8 @@ netstat -ntu | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -nr
 //打印99乘法表
 seq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;i<=NF;i++)printf("%dx%d=%d%s", i, NR, i*NR, i==NR?"\n":"\t")}'
 
+// 查看nginx 访问日志 ip的数量排序
+awk '{print $1}' access.log |sort|uniq -c|sort -n
 ```
 
 # 其他命令的区别 
