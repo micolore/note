@@ -25,11 +25,19 @@ what? why? how?
 1. git push origin :0507-b 删除远程分支
 ### commit
 ### add 
+### diff
+比较版本之间的不同之处
+* git diff                                                  # 显示所有未添加至index的变更
+* git diff --cached                                         # 显示所有已添加index但还未commit的变更
+* git diff HEAD^                                            # 比较与上一个版本的差异
+* git diff HEAD -- ./lib                                    # 比较与HEAD版本lib目录的差异
+* git diff origin/master..master                            # 比较远程分支master上有本地分支master上没有的
+* git diff origin/master..master --stat                     # 只显示差异的文件，不显示具体内容
 ### fetch 
-1. git fetch
-2. git fetch remote_repo
-3. git fetch remote_repo remote_branch_name
-4. git fetch remote_repo remote_branch_name:local_branch_name
+* git fetch
+* git fetch remote_repo
+* git fetch remote_repo remote_branch_name
+* git fetch remote_repo remote_branch_name:local_branch_name
 
 ### remote
 * git remote add <别名> <git地址> #设置远端别名
@@ -80,8 +88,8 @@ example:
    第1行：提交修改内容的摘要  
    第2行：空行  
    第3行以后：修改的理由  
-
-https://segmentfault.com/a/1190000004992316
+## 资料参考
+[https://segmentfault.com/a/1190000004992316](git 教程)
 
 
 3. 不要通过rebase对任何已经提交到公共仓库中的commit进行修改（你自己一个人玩的分支除外）
