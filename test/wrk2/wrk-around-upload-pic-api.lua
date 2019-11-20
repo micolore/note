@@ -33,7 +33,7 @@ local LastBoundary = "--" .. Boundary .. "--"
 
 local CRLF = "\r\n"
 
-local FileBody = read_txt_file("/Users/root1/Documents/_thumb_P_15537977900253.jpg")
+local FileBody = read_txt_file("/Users/root1/Documents/pic/_thumb_P_15537977900253.jpg")
 
 local Filename = "wrk-lua.jpg"
 
