@@ -5,3 +5,4 @@
  找好路线，定下目标，然后action
  
 
+http://lopscoop-image.oss-ap-southeast-1.aliyuncs.com/temp/iflytek_v1.0.9_20200116.apk
