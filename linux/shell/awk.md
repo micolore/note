@@ -107,6 +107,9 @@ seq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;i<=NF;i++)printf("%dx%d=%d%s", i, NR,
 
 // 查看nginx 访问日志 ip的数量排序
 awk '{print $1}' access.log |sort|uniq -c|sort -n
+
+// 判断两列的值，如果一样就输出两列的值，并输出到文件里面
+awk -F '[ ,]'  '$1 == $2 {print $1,$2}'   awk-test.txt > ra.txt
 ```
 
 # 其他命令的区别 
